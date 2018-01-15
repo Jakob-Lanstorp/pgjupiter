@@ -7,9 +7,9 @@
                                  
   -Restoring pcjupiterxl from dump
   -PostGIS extension for spatial data
-  -Crosstab extension for pivot tables
-  -Convert to lower case column names
-  -User grants
+  -Tablefunc extension for pivot tables
+  -Function for converting to lower case column names
+  -Role and user grants
    
    begin                : 2017-03-14
    copyright            : (C) 2017 EPA
@@ -31,16 +31,18 @@
 --  "C:\PostgreSQL\pg10\bin\pg_restore" --host=localhost --port=5432 --username="postgres" --password -c -d pcjupiterxl "C:\data\jupiter\pcjupiterxlplus20171206_full_xl\pcjupiterxlplus20171206_full_xl.backup"
 
 /*
-	First install the postgis extension either by EnterpriseDB or BigSQL package
-	Then create extension postgis
+  Extensions - Install and create the extensions PostGIS and tablefunc (pivot).
+
+	Extensions information:	
+	SELECT pg_available_extensions();   	--shows extensions available for installation
+	SELECT * from pg_extension;		--show installed extensions
+	
+	Test postgis: SELECT postgis_version();	--returns version of postgis
+	Test tablefunc: SELECT * FROM normal_rand(1000, 5, 3);	--returns 1000 double precision rows
 */
 CREATE EXTENSION postgis;
 
-/*
-	First install the crosstab extension either by EnterpriseDB or BigSQL package
-	Then create extension crosstab
-*/
-CREATE EXTENSION crosstab;
+CREATE EXTENSION tablefunc;
 
 /*
   Make lower letters of column names of all jupiter tables in schema public.
@@ -66,9 +68,20 @@ END
 $$;
 
 /*
-	User grants for reader
+  Jupiter reader role used by all users but postgres
 */
-GRANT USAGE ON SCHEMA public TO jupiterreader;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO jupiterreader;
-GRANT SELECT ON TABLE public.layer_styles TO jupiterreader;  -- todo without qgis processing hangs for ever - report it
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO jupiterreader;
+--REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM jupiterrole;
+--REVOKE ALL ON ALL TABLES IN SCHEMA public FROM jupiterrole;
+--REVOKE USAGE ON SCHEMA public FROM jupiterrole;
+--DROP ROLE IF EXISTS jupiterrole;
+CREATE ROLE jupiterrole WITH PASSWORD 'mst' NOLOGIN;
+GRANT USAGE ON SCHEMA public TO jupiterrole;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO jupiterrole;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO jupiterrole;
+--GRANT SELECT ON TABLE public.layer_styles TO jupiterole;      -- if jupiter not in public schema
+--GRANT SELECT ON TABLE public.spatial_ref_sys TO jupiterrole;  -- if jupiter not in public schema 
+
+--Jakob Lanstorp, jalan
+DROP USER IF EXISTS jupiter_jalan;
+CREATE USER jupiter_jalan WITH LOGIN PASSWORD '¤%&#¤%&%&&#¤%/&(/&(/&(#&#¤&#&¤%//&(/&(/()%(¤&/#¤/&#';
+GRANT jupiterrole TO jupiter_jalan;
