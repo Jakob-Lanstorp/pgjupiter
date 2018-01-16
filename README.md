@@ -15,4 +15,5 @@ Read and run adm_pcjupiterxl.sql
 
 Run the other adm_* sql files for spatial enabling and / or index creation.
 
-Run redoxwatertype.sql for quering the different redox water types according to official Danish specification (Geovejledning 6)
+Run redoxwatertype.sql for quering the different redox water types according to official Danish specification 
+(Geovejledning 6)
