@@ -17,3 +17,11 @@ Run the other adm_* sql files for spatial enabling and / or index creation.
 
 Run redoxwatertype.sql for quering the different redox water types according to official Danish specification 
 (Geovejledning 6)
+
+Run ionbalance.sql for ion balance inclusive part calculation.
+
+Run inorganic_crosstab for pivot table of inorganic chemical analysis.
+
+Run combined_chemistry for joining ion balance and redox water type on inorganic_crosstab
+
+Run waterlevet.sql for water levet measurement of groundwater (pejlinger)
