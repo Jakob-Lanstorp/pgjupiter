@@ -1,6 +1,6 @@
-# pgjupiter - copyright Jakob Lanstorp
+# pgjupiter - copyright Jakob Lanstorp - EPA
 
-PostgreSQL PostGIS SQL scripts for quering The Geological Survey of Denmark and Greenland (GEUS) PCJupiterXL database - Denmark's geological and hydrological database.
+PostgreSQL PostGIS SQL scripts for quering The Geological Survey of Denmark and Greenland (GEUS) PCJupiterXL database - Denmark's geological and hydrological database. Made by the Danish Environmental Protection Agency.
 
 pgJupiter scripts can be used as standalone scripts or as the base of Qupiter a QGIS processing plugin.
 
