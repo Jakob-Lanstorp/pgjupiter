@@ -207,6 +207,6 @@ CREATE MATERIALIZED VIEW jupiter.mstmvw_watertype4_latestdate AS (
   ORDER BY boreholeno, sampledate DESC
 );
 
-GRANT SELECT ON ALL TABLES IN SCHEMA jupiter TO jupiter_jalan;
+GRANT SELECT ON ALL TABLES IN SCHEMA jupiter TO jupiterrole;
 
 COMMIT;
