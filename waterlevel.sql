@@ -64,6 +64,8 @@ CREATE MATERIALIZED VIEW jupiter.mstmvw_waterlevel_latest_dates AS (
 );
 --[2017-12-12 18:51:04] completed in 1m 19s 913ms
 
+GRANT SELECT ON ALL TABLES IN SCHEMA jupiter TO jupiterrole;
+
 COMMIT;
 
 -----------------------------------------------------------------------------------------
