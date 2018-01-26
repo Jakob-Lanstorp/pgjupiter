@@ -26,24 +26,24 @@
 BEGIN;
 
 	/*
-	  Add spatial geom type to public.borehole table
+	  Add spatial geom type to jupiter.borehole table
 	*/
-	ALTER TABLE public.borehole ADD COLUMN geom GEOMETRY(POINT, 25832);
-	UPDATE public.borehole SET geom = ST_SetSRID(st_makepoint(xutm,yutm),25832);
+	ALTER TABLE jupiter.borehole ADD COLUMN geom GEOMETRY(POINT, 25832);
+	UPDATE jupiter.borehole SET geom = ST_SetSRID(st_makepoint(xutm,yutm),25832);
 	-- [2017-02-15 11:40:08] 299238 rows affected in 19s 655ms
 
 	/*
 	  Add gist and btree index to borehole table
 	*/
-	-- DROP INDEX public.borehole_geom_idx;
+	-- DROP INDEX jupiter.borehole_geom_idx;
 	CREATE INDEX borehole_geom_idx
-		ON public.borehole USING gist
+		ON jupiter.borehole USING gist
 		(geom);
 	-- [2017-02-15 12:21:50] completed in 6s 707ms
 
-	-- DROP INDEX public.borehole_boreholeno_idx;
+	-- DROP INDEX jupiter.borehole_boreholeno_idx;
 	CREATE INDEX borehole_boreholeno_idx
-		ON public.borehole USING btree
+		ON jupiter.borehole USING btree
 		(boreholeno);
 	-- [2017-02-15 12:22:22] completed in 3s 176ms
 
@@ -52,30 +52,30 @@ BEGIN;
 	  Add unique integer column for opening of borehole in QGIS
 	  Update cannot run a windows function row_number(), so wrap in CTE instead.
 	*/
-	ALTER TABLE public.borehole ADD COLUMN row_id INTEGER;
+	ALTER TABLE jupiter.borehole ADD COLUMN row_id INTEGER;
 
 	with n AS (
 		SELECT
 		  boreholeno AS current_id,
 		  ROW_NUMBER() OVER () AS row_id
-		FROM public.borehole
+		FROM jupiter.borehole
 	)
-	UPDATE public.borehole
+	UPDATE jupiter.borehole
 	SET row_id = n.row_id
 	FROM n
-	WHERE public.borehole.boreholeno = n.current_id;
+	WHERE jupiter.borehole.boreholeno = n.current_id;
 	--[2017-02-16 09:13:49] 299238 rows affected in 45s 323ms
 	
 	/*
 	  Demo view showing how to add unique integer column for open in QGIS
 	*/
-	DROP VIEW IF EXISTS public.vw_borehole_demo;
-	CREATE OR REPLACE VIEW public.vw_borehole_demo AS (
+	DROP VIEW IF EXISTS jupiter.vw_borehole_demo;
+	CREATE OR REPLACE VIEW jupiter.vw_borehole_demo AS (
 		SELECT
 		  row_number() OVER (ORDER BY boreholeno) AS id,
 		  boreholeno,
 		  geom
-		FROM public.borehole
+		FROM jupiter.borehole
 	);
 	
 COMMIT;	
