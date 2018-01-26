@@ -25,7 +25,7 @@ BEGIN;
 
 	-- DROP INDEX grwchemanalysis_sampleid_idx;
 	CREATE INDEX grwchemanalysis_sampleid_idx
-		ON public.grwchemanalysis
+		ON jupiter.grwchemanalysis
 		USING btree
 		(sampleid);
 
