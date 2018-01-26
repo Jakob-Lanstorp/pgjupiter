@@ -187,7 +187,7 @@ CREATE MATERIALIZED VIEW jupiter.mstmvw_inorganic_compound_all_dates AS (
 );
 --[2017-12-11 15:14:15] completed in 36s 749ms
 
-REFRESH MATERIALIZED VIEW jupiter.mstmvw_inorganic_compound_all_dates;
+--REFRESH MATERIALIZED VIEW jupiter.mstmvw_inorganic_compound_all_dates;
 
 /*
   qjupiter production materialized view - all dates
