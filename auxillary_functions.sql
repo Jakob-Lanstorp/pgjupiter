@@ -27,6 +27,29 @@ BEGIN;
 	/*
 		Get unit of sample and compound
 	*/
+	DROP FUNCTION IF EXISTS jupiter.db_age_in_days();
+	CREATE OR REPLACE FUNCTION jupiter.db_age_in_days()
+	  RETURNS INT AS $$
+	DECLARE
+	  rec RECORD;
+		/*
+			Example:
+			SELECT jupiter.db_age_in_days();
+		*/
+	BEGIN
+		SELECT extract(DAYS FROM now() - grwchemsample.insertdate) AS days_old
+    		FROM jupiter.grwchemsample
+    		ORDER BY sampledate DESC
+    		LIMIT 1
+	  	INTO rec;
+
+	  RETURN rec.days_old;
+	END; $$
+	LANGUAGE plpgsql;
+	
+	/*
+		Get unit of sample and compound
+	*/
 	DROP FUNCTION IF EXISTS jupiter.mst_compoundname_to_unit(INTEGER, TEXT);
 	CREATE OR REPLACE FUNCTION jupiter.mst_compoundname_to_unit(sample_id INTEGER, compound_name text)
 	  RETURNS TABLE (
