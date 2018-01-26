@@ -168,6 +168,8 @@ CREATE MATERIALIZED VIEW jupiter.mstmvw_ionbalance_latest_dates AS (
   ORDER BY boreholeno, sampledate DESC
 );
 --[2017-12-11 14:58:33] completed in 46s 359ms
-REFRESH MATERIALIZED VIEW jupiter.mstmvw_ionbalance_latest_dates;
+--REFRESH MATERIALIZED VIEW jupiter.mstmvw_ionbalance_latest_dates;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA jupiter TO jupiterrole;
 
 COMMIT;
