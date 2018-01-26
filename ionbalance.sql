@@ -111,7 +111,7 @@ CREATE OR REPLACE VIEW jupiter.mstvw_ionbalance AS (
           --left(hydrogencarbonat, 1) NOT IN ('<', '>', '!', 'B') AND hydrogencarbonat IS NOT NULL AND
           --left(sulfat, 1) NOT IN ('<', '>', '!', 'B') AND sulfat IS NOT NULL AND
           --left(nitrat, 1) NOT IN ('<', '>', 'D', '!', 'B') AND nitrat IS NOT NULL --what does D mean in column attribute of grwchemanalysis?
-          isnumeric(chlorid) AND isnumeric(hydrogencarbonat) AND isnumeric(sulfat) AND isnumeric(nitrat)
+          jupiter.isnumeric(chlorid) AND jupiter.isnumeric(hydrogencarbonat) AND jupiter.isnumeric(sulfat) AND jupiter.isnumeric(nitrat)
     ),
       cation AS (
         SELECT
@@ -128,7 +128,7 @@ CREATE OR REPLACE VIEW jupiter.mstvw_ionbalance AS (
           --LEFT (magnesium, 1) NOT IN ('<', '>', '!', 'B') AND magnesium IS NOT NULL AND
           --LEFT (natrium, 1) NOT IN ('<', '>', '!', 'B') AND natrium IS NOT NULL AND
           --LEFT (kalium, 1) NOT IN ('<', '>', 'D', '!', 'B') AND kalium IS NOT NULL
-          isnumeric(calcium) AND isnumeric(magnesium) AND isnumeric(natrium) AND isnumeric(kalium)
+          jupiter.isnumeric(calcium) AND jupiter.isnumeric(magnesium) AND jupiter.isnumeric(natrium) AND jupiter.isnumeric(kalium)
     )
   SELECT
     row_number() OVER () AS row_id,
