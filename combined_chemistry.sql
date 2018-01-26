@@ -77,6 +77,6 @@ CREATE MATERIALIZED VIEW jupiter.mstmvw_combined_chemestry_latestdates AS (
   ORDER BY boreholeno, sampledate DESC
 );
 
-GRANT SELECT ON ALL TABLES IN SCHEMA jupiter TO jupiterreader;
+GRANT SELECT ON ALL TABLES IN SCHEMA jupiter TO jupiterrole;
 
 COMMIT;
