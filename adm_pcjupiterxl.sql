@@ -35,7 +35,7 @@
 
 -- Restore backup:
 --  "C:\PostgreSQL\10\bin\pg_restore" --host=localhost --port=5432 --username="postgres" --password -c -d pcjupiterxl "D:\jupiter\pcjupiterxlplus_full_xl_2018jan24\pcjupiterxlplus_full_xl.backup"
--- Test age of database: SELECT "SAMPLEDATE", "INSERTDATE" from public.grwchemsample ORDER BY "INSERTDATE" DESC;
+-- Test age of database: SELECT "SAMPLEDATE", "INSERTDATE" from jupiter.grwchemsample ORDER BY "INSERTDATE" DESC;
 -- Backup restore version from 2018-01-22 had "WARNING: error ignored on restore: 520"
 
 
