@@ -26,24 +26,24 @@
 BEGIN;
 
 	/*
-	  Add spatial geom type to public.drwplant table
+	  Add spatial geom type to jupiter.drwplant table
 	*/
-	ALTER TABLE public.drwplant ADD COLUMN geom GEOMETRY(POINT, 25832);
-	UPDATE public.drwplant SET geom = ST_SetSRID(st_makepoint(xutm32euref89,yutm32euref89),25832);
+	ALTER TABLE jupiter.drwplant ADD COLUMN geom GEOMETRY(POINT, 25832);
+	UPDATE jupiter.drwplant SET geom = ST_SetSRID(st_makepoint(xutm32euref89,yutm32euref89),25832);
 	--[2017-02-17 12:29:21] 95517 rows affected in 2s 891ms
 
 	/*
 	  Add gist and btree index to drwplant table
 	*/
-	-- DROP INDEX public.drwplant_geom_idx;
+	-- DROP INDEX jupiter.drwplant_geom_idx;
 	CREATE INDEX drwplant_geom_idx
-		ON public.drwplant USING gist
+		ON jupiter.drwplant USING gist
 		(geom);
 	--[2017-02-17 12:29:58] completed in 1s 305ms
 
 	-- DROP INDEX drwplant_plantid_idx;
 	CREATE INDEX drwplant_plantid_idx
-		ON public.drwplant
+		ON jupiter.drwplant
 		USING btree
 		(plantid);
 	--[2017-02-17 12:30:27] completed in 162ms
@@ -52,18 +52,18 @@ BEGIN;
 	  A spatial table in QGIS from PostGIS must have an unique integer column.
 	  Update cannot run on a windows function row_number(), so wrap in CTE instead.
 	*/
-	ALTER TABLE public.drwplant ADD COLUMN row_id INTEGER;
+	ALTER TABLE jupiter.drwplant ADD COLUMN row_id INTEGER;
 
 	with n AS (
 		SELECT
 		  plantid AS current_id,
 		  ROW_NUMBER() OVER () AS row_id
-		FROM public.drwplant
+		FROM jupiter.drwplant
 	)
-	UPDATE public.drwplant
+	UPDATE jupiter.drwplant
 	SET row_id = n.row_id
 	FROM n
-	WHERE public.drwplant.plantid = n.current_id;
+	WHERE jupiter.drwplant.plantid = n.current_id;
 	--[2017-02-17 12:31:37] 95517 rows affected in 5s 187ms
 
 COMMIT;	
