@@ -1,6 +1,7 @@
 /* 
  ***************************************************************************
-  inorganic_crosstab.sql
+  inorganic_crosstab.sql 
+  Run from current schema public
   
   Danish Environmental Protection Agency (EPA)
   Jakob Lanstorp, (c) December 2017
