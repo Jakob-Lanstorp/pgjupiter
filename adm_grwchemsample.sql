@@ -25,7 +25,7 @@ BEGIN;
 
 	-- DROP INDEX grwchemsample_boreholeno_idx;
 	CREATE INDEX  grwchemsample_boreholeno_idx
-		ON public.grwchemsample
+		ON jupiter.grwchemsample
 		USING btree
 		(boreholeno);
 	--[2017-03-30 14:04:50] completed in 2s 711ms
