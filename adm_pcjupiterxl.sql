@@ -98,6 +98,22 @@ END
 $$;
 
 /*
+  Some numeric values are placed in text colum types
+  The function test is value is numeric
+*/
+CREATE OR REPLACE FUNCTION jupiter.isnumeric(text) RETURNS BOOLEAN AS $$
+DECLARE x NUMERIC;
+BEGIN
+    x = $1::NUMERIC;
+    RETURN TRUE;
+EXCEPTION WHEN others THEN
+    RETURN FALSE;
+END;
+$$
+STRICT
+LANGUAGE plpgsql IMMUTABLE;
+
+/*
 	User grants for reader
 	DELETE Role used instead ...
 */
@@ -129,5 +145,30 @@ GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO jupiterrole;
 
 --Jakob Lanstorp, jalan
 DROP USER IF EXISTS jupiter_jalan;
-CREATE USER jupiter_jalan WITH LOGIN PASSWORD 'setyourpasswordhere';
+CREATE USER jupiter_jalan WITH LOGIN PASSWORD 'bfa4e464-0e8e-43f8-a982-f3456e954c90';
 GRANT jupiterrole TO jupiter_jalan;
+
+--Trine lyngvig Nielsen, trine
+DROP USER IF EXISTS jupiter_trini;
+CREATE USER jupiter_trini WITH LOGIN PASSWORD '55b553d5-a22b-4417-974f-a80bb680cf4a';
+GRANT jupiterrole TO jupiter_trini;
+
+-- Nanna Linn Jensen, nalje
+DROP USER IF EXISTS jupiter_nalje;
+CREATE USER jupiter_nalje WITH LOGIN PASSWORD '9a0f5cc3-a8cb-41b0-b2b3-35d32c607988';
+GRANT jupiterrole TO jupiter_nalje;
+
+-- Anders Pytlich, anpyt
+DROP USER IF EXISTS jupiter_anpyt;
+CREATE USER jupiter_anpyt WITH LOGIN PASSWORD '0db4a19b-406c-4275-986a-7e9b29132d7a';
+GRANT jupiterrole TO jupiter_anpyt;
+
+-- Jørgen Sivertsen, josiv
+DROP USER IF EXISTS jupiter_josiv;
+CREATE USER jupiter_josiv WITH LOGIN PASSWORD '66fc890f-8b68-469c-bb4a-cfa936f60987';
+GRANT jupiterrole TO jupiter_josiv;
+
+-- Helle Møller Holm, hmhol
+DROP USER IF EXISTS jupiter_hmhol;
+CREATE USER jupiter_hmhol WITH LOGIN PASSWORD '023d6ad5-7c78-4dad-bcfa-cb9ba384d348';
+GRANT jupiterrole TO jupiter_hmhol;
