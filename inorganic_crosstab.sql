@@ -177,8 +177,6 @@ CREATE OR REPLACE VIEW jupiter.mstvw_inorganic_compound AS (
   INNER JOIN inorganic_crosstab ic USING (sampleid)
 );
 
-GRANT SELECT ON TABLE jupiter.mstvw_inorganic_compound TO jupiter_jalan;
-
 /*
   qjupiter production materialized view - all dates
 */
@@ -188,8 +186,6 @@ CREATE MATERIALIZED VIEW jupiter.mstmvw_inorganic_compound_all_dates AS (
     SELECT * FROM jupiter.mstvw_inorganic_compound
 );
 --[2017-12-11 15:14:15] completed in 36s 749ms
-
-GRANT SELECT ON TABLE jupiter.mstmvw_inorganic_compound_all_dates TO jupiter_jalan;
 
 REFRESH MATERIALIZED VIEW jupiter.mstmvw_inorganic_compound_all_dates;
 
@@ -210,6 +206,8 @@ CREATE MATERIALIZED VIEW jupiter.mstmvw_inorganic_compound_latest_dates AS (
 
 GRANT SELECT ON TABLE jupiter.mstmvw_inorganic_compound_latest_dates TO jupiter_jalan;
 
-REFRESH MATERIALIZED VIEW jupiter.mstmvw_inorganic_compound_latest_dates;
+--REFRESH MATERIALIZED VIEW jupiter.mstmvw_inorganic_compound_latest_dates;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA jupiter TO jupiterrole;
 
 COMMIT;
