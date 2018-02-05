@@ -26,6 +26,8 @@ READ BEFORE INSTALLATION
 
 PSQL
 
+pg_restore --host=myhost --port=5432 --username=myuser --password -c -d mydatabase pcjupiterxlplus_full_xl.backup
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_pcjupiterxl.sql
 
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_borehole.sql
