@@ -3,14 +3,14 @@
   adm_borehole.sql
   
   Danish Environmental Protection Agency (EPA)
-  Jakob Lanstorp, (c) December 2017
+  Jakob Lanstorp, (c)
                                  
   -Spatialize borehole table
   -Create indexes for borehole table
   -Add unique integer column for QGIS use
   
-   begin                : 2017-03-14
-   copyright            : (C) 2017 EPA
+   begin                : 2018-02-02
+   copyright            : (C) 2018 EPA
    email                : jalan@mst.dk
  
  ***************************************************************************
@@ -28,7 +28,16 @@ BEGIN;
 	/*
 	  Add spatial geom type to jupiter.borehole table
 	*/
-	ALTER TABLE jupiter.borehole ADD COLUMN geom GEOMETRY(POINT, 25832);
+	DO $$
+	    BEGIN
+		BEGIN
+		    ALTER TABLE jupiter.borehole ADD COLUMN geom GEOMETRY(POINT, 25832);
+		EXCEPTION
+		    WHEN duplicate_column THEN RAISE NOTICE 'column geom already exists in jupiter.borehole.';
+		END;
+	    END;
+	$$;
+
 	UPDATE jupiter.borehole SET geom = ST_SetSRID(st_makepoint(xutm,yutm),25832);
 	-- [2017-02-15 11:40:08] 299238 rows affected in 19s 655ms
 
@@ -36,13 +45,13 @@ BEGIN;
 	  Add gist and btree index to borehole table
 	*/
 	-- DROP INDEX jupiter.borehole_geom_idx;
-	CREATE INDEX borehole_geom_idx
+	CREATE INDEX IF NOT EXISTS borehole_geom_idx
 		ON jupiter.borehole USING gist
 		(geom);
 	-- [2017-02-15 12:21:50] completed in 6s 707ms
 
 	-- DROP INDEX jupiter.borehole_boreholeno_idx;
-	CREATE INDEX borehole_boreholeno_idx
+	CREATE INDEX IF NOT EXISTS borehole_boreholeno_idx
 		ON jupiter.borehole USING btree
 		(boreholeno);
 	-- [2017-02-15 12:22:22] completed in 3s 176ms
@@ -52,7 +61,15 @@ BEGIN;
 	  Add unique integer column for opening of borehole in QGIS
 	  Update cannot run a windows function row_number(), so wrap in CTE instead.
 	*/
-	ALTER TABLE jupiter.borehole ADD COLUMN row_id INTEGER;
+		DO $$
+	    BEGIN
+		BEGIN
+		    ALTER TABLE jupiter.borehole ADD COLUMN row_id INTEGER;
+		EXCEPTION
+		    WHEN duplicate_column THEN RAISE NOTICE 'column row_id already exists in jupiter.borehole.';
+		END;
+	    END;
+	$$;
 
 	with n AS (
 		SELECT
