@@ -27,18 +27,31 @@ READ BEFORE INSTALLATION
 PSQL
 
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_pcjupiterxl.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_borehole.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_drwplant.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_grwchemanalysis.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_grwchemsample.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_pltchemanalysis.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_roles.sql
 
 psql -h myhost -p 5432 -U myuser -d myschema -f auxillary_functions.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f borehole.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f inorganic-crosstab.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f ionbalance.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f redoxwatertype.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f waterlevel.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f combined_chemistry.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_pcjupiterxl.sql
