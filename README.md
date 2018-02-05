@@ -30,6 +30,8 @@ pg_restore --host=myhost --port=5432 --username=myuser --password -c -d mydataba
 
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_pcjupiterxl.sql
 
+psql -h myhost -p 5432 -U myuser -d myschema -f adm_roles.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_borehole.sql
 
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_drwplant.sql
