@@ -9,7 +9,7 @@ Qupiter - a QGIS processing plugin (soon available from github.com/Jakob-Lanstor
 
 READ BEFORE INSTALLATION 
 
--adm_pcjupiterxl.sql: Restoring backup, move tables from public to jupiter schema, chnange to lower case columns names. 
+-adm_pcjupiterxl.sql: Restoring backup, move tables from public to jupiter schema, change to lower case columns names. 
 
 -adm_* sql files: Creation of geometry column, spatial and non spatial index.
 
