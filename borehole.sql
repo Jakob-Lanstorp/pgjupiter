@@ -26,7 +26,7 @@ BEGIN;
 /*
   Canceled wells (Sløjfede boringer)
 */
-DROP MATERIALIZED VIEW jupiter.mstmvw_boring_canceled;
+DROP MATERIALIZED VIEW IF EXISTS jupiter.mstmvw_boring_canceled;
 
 CREATE MATERIALIZED VIEW jupiter.mstmvw_boring_canceled AS (
   SELECT
