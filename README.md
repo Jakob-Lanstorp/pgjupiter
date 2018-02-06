@@ -21,7 +21,7 @@ Qupiter - a QGIS processing plugin (soon available from github.com/Jakob-Lanstor
 * ionbalance.sql: Creation of materialized views for ion balance inclusive temporary part calculation.
 * inorganic_crosstab.sql: Creation of materialized views for for pivot table of inorganic chemical analysis.
 * combined_chemistry: Creation of materialized views joining ion balance and redox water type on inorganic_crosstab.
-*waterlevet.sql: Creation of materialized views for water levet measurement of groundwater (pejlinger).
+* waterlevet.sql: Creation of materialized views for water levet measurement of groundwater (pejlinger).
 
 ## PSQL
 
