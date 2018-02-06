@@ -1,4 +1,6 @@
-# pgjupiter - copyright Jakob Lanstorp - EPA
+# About pgjupiter 
+
+copyright Jakob Lanstorp - EPA
 
 PostgreSQL PostGIS SQL scripts for quering The Geological Survey of Denmark and Greenland (GEUS) PCJupiterXL database - Denmark's geological and hydrological database. Scripts made by the Danish Environmental Protection Agency (EPA).
 
@@ -7,7 +9,7 @@ pgJupiter scripts can be used as standalone scripts or as the base of Qupiter a 
 pgJupiter SQL requires a hosted PostgreSQL version of PCJupiterXL (soon general available from geus.dk) and
 Qupiter - a QGIS processing plugin (soon available from github.com/Jakob-Lanstorp/qjupiter)
 
-READ BEFORE INSTALLATION 
+## SQL files 
 
 -adm_pcjupiterxl.sql: Restoring backup, move tables from public to jupiter schema, change to lower case columns names. 
 
@@ -30,7 +32,7 @@ READ BEFORE INSTALLATION
 
 -waterlevet.sql: Creation of materialized views for water levet measurement of groundwater (pejlinger).
 
-PSQL
+## PSQL
 
 pg_restore --host=myhost --port=5432 --username=myuser --password -c -d mydatabase pcjupiterxlplus_full_xl.backup
 
