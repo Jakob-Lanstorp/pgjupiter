@@ -11,16 +11,16 @@ Qupiter - a QGIS processing plugin (soon available from github.com/Jakob-Lanstor
 
 ## SQL files 
 
-*adm_pcjupiterxl.sql: Restoring backup, move tables from public to jupiter schema, change to lower case columns names. 
-*adm_roles.sql: Cerating role for DbSync. Creating multiple readonly roles for logging queries.
-*adm_* sql files: Creation of geometry column, spatial and non spatial index.
-*auxillary_functions.sql: Miscellaneous plpgsql function for QGIS Processing plugin
-*borehole.sql: Miscellaneous borehole queries.
-*redoxwatertype.sql: Creation of materialized views for redox water types according to official Danish specification 
+* adm_pcjupiterxl.sql: Restoring backup, move tables from public to jupiter schema, change to lower case columns names. 
+* adm_roles.sql: Cerating role for DbSync. Creating multiple readonly roles for logging queries.
+* adm_* sql files: Creation of geometry column, spatial and non spatial index.
+* auxillary_functions.sql: Miscellaneous plpgsql function for QGIS Processing plugin
+* borehole.sql: Miscellaneous borehole queries.
+* redoxwatertype.sql: Creation of materialized views for redox water types according to official Danish specification 
 (Geovejledning 6).
-*ionbalance.sql: Creation of materialized views for ion balance inclusive temporary part calculation.
-*inorganic_crosstab.sql: Creation of materialized views for for pivot table of inorganic chemical analysis.
-*combined_chemistry: Creation of materialized views joining ion balance and redox water type on inorganic_crosstab.
+* ionbalance.sql: Creation of materialized views for ion balance inclusive temporary part calculation.
+* inorganic_crosstab.sql: Creation of materialized views for for pivot table of inorganic chemical analysis.
+* combined_chemistry: Creation of materialized views joining ion balance and redox water type on inorganic_crosstab.
 *waterlevet.sql: Creation of materialized views for water levet measurement of groundwater (pejlinger).
 
 ## PSQL
