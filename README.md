@@ -22,6 +22,7 @@ Qupiter - a QGIS processing plugin (soon available from github.com/Jakob-Lanstor
 * inorganic_crosstab.sql: Creation of materialized views for for pivot table of inorganic chemical analysis.
 * combined_chemistry: Creation of materialized views joining ion balance and redox water type on inorganic_crosstab.
 * waterlevet.sql: Creation of materialized views for water levet measurement of groundwater (pejlinger).
+* pesticide.sql: General pesticide queries. Please read disclamer and todo before use.
 
 ## PSQL
 
@@ -57,4 +58,4 @@ psql -h myhost -p 5432 -U myuser -d myschema -f waterlevel.sql
 
 psql -h myhost -p 5432 -U myuser -d myschema -f combined_chemistry.sql
 
-psql -h myhost -p 5432 -U myuser -d myschema -f adm_pcjupiterxl.sql
+psql -h myhost -p 5432 -U myuser -d myschema -f pesticide.sql
