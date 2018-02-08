@@ -31,7 +31,7 @@ BEGIN;
       + Region Midtjylland Chloridazon og Desphenyl-chloridazon
       + Drikkevandsbekendgørelse Aldrin, dieldrin, heptachlor, heptachlorepoxid
   */
-  DROP TABLE jupiter.mst_bekendtgoerelse_pesticide_list;
+  DROP TABLE IF EXISTS jupiter.mst_bekendtgoerelse_pesticide_list;
   CREATE TABLE jupiter.mst_bekendtgoerelse_pesticide_list (
     rowid SERIAL NOT NULL,
     compoundno INTEGER NOT NULL,
@@ -128,8 +128,9 @@ BEGIN;
     TODO: MISSING accumulated pesticide values
     TODO: DO NOT USE FOR RETRIEVING TRUE LAW FULL EXCEEDANCE
   */
+
   DROP MATERIALIZED VIEW IF EXISTS jupiter.mstmvw_pesticide_exceedance CASCADE;
-  REFRESH MATERIALIZED VIEW jupiter.mstmvw_pesticide_exceedance;
+  --REFRESH MATERIALIZED VIEW jupiter.mstmvw_pesticide_exceedance;
 
   CREATE MATERIALIZED VIEW jupiter.mstmvw_pesticide_exceedance AS (
     WITH aldrin AS (
@@ -185,10 +186,8 @@ BEGIN;
       )
     SELECT
       row_number() OVER (ORDER BY p.id) AS id1,
-      p.*,
-      f.list_io_id
+      p.*
     FROM pesticide p
-    LEFT JOIN gvkort.fi f ON st_within(p.geom, f.geom) AND f.list_io_id = 2 -- sfi
   );
   --6034
   --SELECT * FROM jupiter.mvw_pesticide_exceedance;
