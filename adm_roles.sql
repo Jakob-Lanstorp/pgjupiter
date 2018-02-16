@@ -39,5 +39,30 @@ GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA jupiter TO jupiterrole;
 
 --Example on one user adopting a role
 DROP USER IF EXISTS jupiter_jalan;
-CREATE USER jupiter_jalan WITH LOGIN PASSWORD '123456789';
+CREATE USER jupiter_jalan WITH LOGIN PASSWORD 'xxxxxx';
 GRANT jupiterrole TO jupiter_jalan;
+
+/*
+  Create dbsync role and change ownership
+*/
+CREATE ROLE jupiter_dbsync WITH PASSWORD 'xxxxx' LOGIN;
+ALTER DATABASE pcjupiterxl OWNER TO jupiter_dbsync;
+
+-- Change ownership of tables in Jupiter schema
+DO
+$$
+DECLARE
+    row record;
+BEGIN
+    FOR row IN SELECT tablename FROM pg_tables WHERE schemaname = 'jupiter'
+    LOOP
+        IF row.tablename = ANY( ARRAY['layer_styles', 'spatial_ref_sys']) THEN
+          raise notice 'Don''t change ownership of: %', row.tablename;
+        ELSE
+          raise notice 'Changing ownership of: %', row.tablename;
+
+          EXECUTE 'ALTER TABLE jupiter.' || quote_ident(row.tablename) || ' OWNER TO jupiter_dbsync;';
+        END IF;
+    END LOOP;
+END;
+$$;
