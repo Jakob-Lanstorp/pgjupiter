@@ -23,6 +23,8 @@ Qupiter - a QGIS processing plugin (soon available from github.com/Jakob-Lanstor
 * combined_chemistry: Creation of materialized views joining ion balance and redox water type on inorganic_crosstab.
 * waterlevet.sql: Creation of materialized views for water levet measurement of groundwater (pejlinger).
 * pesticide.sql: General pesticide queries. Please read disclamer and todo before use.
+* bulk_grw_chemistry.sql: Creation of materialized views for general groundwater compound query.
+* bulk_plt_chemistry.sql: Creation of materialized views for general plant compound query.
 
 ## PSQL
 
