@@ -237,8 +237,8 @@ BEGIN;
   /*
     Tæl sløjfede boring pr år, som har sammentræf med pesticid overskridelser
   */
-  Drop VIEW IF EXISTS jupiter.mstvw_sløjfede_boringer_pr_aar;
-  CREATE VIEW jupiter.mstvw_sløjfede_boringer_pr_aar AS (
+  Drop VIEW IF EXISTS jupiter.mstvw_sloejfede_boringer_pr_aar;
+  CREATE VIEW jupiter.mstvw_sloejfede_boringer_pr_aar AS (
     WITH count_sfoejfede AS (
       SELECT
         extract(YEAR FROM abandondat)AS year,
