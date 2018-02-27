@@ -59,3 +59,5 @@ psql -h myhost -p 5432 -U myuser -d myschema -f waterlevel.sql
 psql -h myhost -p 5432 -U myuser -d myschema -f combined_chemistry.sql
 
 psql -h myhost -p 5432 -U myuser -d myschema -f pesticide.sql
+psql -h myhost -p 5432 -U myuser -d myschema -f bulk_plt_chemistry.sql
+psql -h myhost -p 5432 -U myuser -d myschema -f bulk_grw_chemistry.sql
