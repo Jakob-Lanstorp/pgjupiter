@@ -1,16 +1,12 @@
 /*
  ***************************************************************************
   adm_roles.sql
-
   Danish Environmental Protection Agency (EPA)
   Jakob Lanstorp, (c)
-
   -Create index
-
-   begin                : 2018-02-01
+   begin                : 2018-04-06
    copyright            : (C) 2018 EPA
    email                : jalan@mst.dk
-
  ***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,32 +17,28 @@
  ***************************************************************************
 */
 
-/*
-  Jupiter reader role used by all users but postgres
-*/
---REVOKE ALL ON ALL FUNCTIONS IN SCHEMA jupiter FROM jupiterrole;
---REVOKE ALL ON ALL TABLES IN SCHEMA jupiter FROM jupiterrole;
---REVOKE USAGE ON SCHEMA jupiter FROM jupiterrole;
---DROP ROLE IF EXISTS jupiterrole;
 
-CREATE ROLE jupiterrole WITH PASSWORD 'xxxxx' NOLOGIN;
-
-GRANT SELECT ON TABLE public.layer_styles TO jupiterole;      
-GRANT SELECT ON TABLE public.spatial_ref_sys TO jupiterrole;  
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO jupiterrole;
-GRANT USAGE ON SCHEMA jupiter TO jupiterrole;
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA jupiter TO jupiterrole;
-
---Example on one user adopting a role
-DROP USER IF EXISTS jupiter_jalan;
-CREATE USER jupiter_jalan WITH LOGIN PASSWORD 'xxxxxx';
-GRANT jupiterrole TO jupiter_jalan;
+--REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM jupiterreader;
+--REVOKE ALL ON ALL TABLES IN SCHEMA public FROM jupiterreader;
+--REVOKE USAGE ON SCHEMA public FROM jupiterreader;
+--DROP USER IF EXISTS jupiterreader;
+--CREATE USER jupiterreader WITH PASSWORD 'mst';                --login default for user not for role creation
+--GRANT USAGE ON SCHEMA public TO jupiterreader;
+--GRANT SELECT ON ALL TABLES IN SCHEMA public TO jupiterreader;
+--GRANT SELECT ON TABLE public.layer_styles TO jupiterreader;  -- TODO without qgis processing hangs for ever - report it
+--GRANT SELECT ON TABLE public.spatial_ref_sys TO jupiterreader;
+--GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO jupiterreader;
 
 /*
   Create dbsync role and change ownership
 */
-CREATE ROLE jupiter_dbsync WITH PASSWORD 'xxxxx' LOGIN;
+CREATE ROLE jupiter_dbsync WITH PASSWORD 'synkit' LOGIN;
 ALTER DATABASE pcjupiterxl OWNER TO jupiter_dbsync;
+
+GRANT USAGE ON SCHEMA jupiter TO jupiter_dbsync;
+GRANT ALL ON SCHEMA jupiter TO jupiter_dbsync;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA jupiter TO jupiter_dbsync;
+
 
 -- Change ownership of tables in Jupiter schema
 DO
@@ -66,3 +58,30 @@ BEGIN
     END LOOP;
 END;
 $$;
+
+
+/*
+  Jupiter reader role used by all users but postgres
+*/
+--REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM jupiterrole;
+--REVOKE ALL ON ALL TABLES IN SCHEMA public FROM jupiterrole;
+--REVOKE USAGE ON SCHEMA public FROM jupiterrole;
+--DROP ROLE IF EXISTS jupiterrole;
+CREATE ROLE jupiterrole WITH PASSWORD 'mst' NOLOGIN;
+GRANT USAGE ON SCHEMA jupiter TO jupiterrole;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO jupiterrole;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA jupiter TO jupiterrole;
+--GRANT SELECT ON TABLE public.layer_styles TO jupiterole;      -- if jupiter not in public schema
+--GRANT SELECT ON TABLE public.spatial_ref_sys TO jupiterrole;  -- if jupiter not in public schema
+
+--SHOW search_path;
+--SELECT CURRENT_USER;
+ALTER ROLE jupiterrole SET SEARCH_PATH = "$user, public, jupiter";
+
+
+--Jakob Lanstorp, jalan
+DROP USER IF EXISTS jupiter_jalan;
+CREATE USER jupiter_jalan WITH LOGIN PASSWORD 'some_pw';
+GRANT jupiterrole TO jupiter_jalan;
+--GRANT SELECT ON ALL TABLES IN SCHEMA jupiter TO jupiter_jalan;
+--GRANT USAGE ON SCHEMA jupiter TO jupiter_jalan;
