@@ -44,6 +44,8 @@ psql -h myhost -p 5432 -U myuser -d myschema -f adm_grwchemsample.sql
 
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_pltchemanalysis.sql
 
+psql -h myhost -p 5432 -U myuser -d myschema -f adm_pltchemsample.sql
+
 psql -h myhost -p 5432 -U myuser -d myschema -f adm_roles.sql
 
 psql -h myhost -p 5432 -U myuser -d myschema -f auxillary_functions.sql
