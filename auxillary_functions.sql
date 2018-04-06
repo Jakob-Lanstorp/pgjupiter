@@ -3,7 +3,7 @@
   auxillary_functions.sql
   
   Danish Environmental Protection Agency (EPA)
-  Jakob Lanstorp, (c) December 2017
+  Jakob Lanstorp, (c) April 2018
                                  
   -Misc function calls used by Qupiter QGIS Procesing plugins
   -Update schema name if not schema is public
@@ -25,6 +25,23 @@
 BEGIN;
 
 	/*
+	  Some numeric values are placed in text colum types
+	  The function test is value is numeric
+	*/
+	CREATE OR REPLACE FUNCTION jupiter.isnumeric(text) RETURNS BOOLEAN AS $$
+	DECLARE x NUMERIC;
+	BEGIN
+		x = $1::NUMERIC;
+		RETURN TRUE;
+	EXCEPTION WHEN others THEN
+		RETURN FALSE;
+	END;
+	$$
+	STRICT
+	LANGUAGE plpgsql IMMUTABLE;
+
+
+	/*
 		Get unit of sample and compound
 	*/
 	DROP FUNCTION IF EXISTS jupiter.db_age_in_days();
@@ -38,17 +55,53 @@ BEGIN;
 		*/
 	BEGIN
 		SELECT extract(DAYS FROM now() - grwchemsample.insertdate) AS days_old
-    		FROM jupiter.grwchemsample
-    		ORDER BY sampledate DESC
-    		LIMIT 1
-	  	INTO rec;
+    FROM jupiter.grwchemsample
+    ORDER BY sampledate DESC
+    LIMIT 1
+	  INTO rec;
 
 	  RETURN rec.days_old;
+
 	END; $$
+
 	LANGUAGE plpgsql;
-	
+
+
 	/*
-		Get unit of sample and compound
+		Get unit of sample and compoundid
+	*/
+	DROP FUNCTION IF EXISTS jupiter.mst_compoundno_to_unit(INTEGER, INTEGER);
+
+	CREATE OR REPLACE FUNCTION jupiter.mst_compoundno_to_unit(sample_id INTEGER, compound_no INTEGER)
+	  RETURNS TEXT
+  LANGUAGE plpgsql AS
+  $$
+	DECLARE
+		rec RECORD;
+	  /*
+	  Call like:
+	  SELECT jupiter.mst_compoundno_to_unit(212887, 1511);  -- Arsen
+	  SELECT jupiter.mst_compoundno_to_unit(212887, 1176); -- Nitrat
+	  */
+	BEGIN
+    SELECT
+      gca.compoundno,
+      c.longtext AS unit
+    FROM
+      jupiter.grwchemanalysis gca
+    INNER JOIN jupiter.code c ON c.code::NUMERIC = gca.unit AND c.codetype = 752
+    WHERE
+      gca.sampleid = sample_id AND gca.compoundno = compound_no
+    INTO rec;
+
+    RETURN rec.unit;
+	END
+	$$;
+
+--select * from jupiter.mst_compoundname_to_no('Kobber');
+
+	/*
+		Get unit of sample and compoundname
 	*/
 	DROP FUNCTION IF EXISTS jupiter.mst_compoundname_to_unit(INTEGER, TEXT);
 	CREATE OR REPLACE FUNCTION jupiter.mst_compoundname_to_unit(sample_id INTEGER, compound_name text)
@@ -86,10 +139,10 @@ BEGIN;
 		WHERE gca.sampleid = sample_id
 	  )
 	  LOOP
-		sampleid := sample_id;
-		compoundname = compound_name;
-		unit :=  rec.unit;
-		RETURN NEXT;
+			sampleid := sample_id;
+			compoundname = compound_name;
+			unit :=  rec.unit;
+			RETURN NEXT;
 	  END LOOP;
 	END
 	$$;
